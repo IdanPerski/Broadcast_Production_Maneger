@@ -10,9 +10,9 @@ The Production Management Web App is a web-based solution for managing and sched
 
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-  <!-- - [Installation](#installation) -->
+- [Getting Started](#getting-Started)
   <!-- - [Usage](#usage)
-- [Contributing](#contributing)
+<!-- - [Contributing](#contributing)
 - [License](#license) -->
 
 ## Features
@@ -32,3 +32,13 @@ The Production Management Web App is a web-based solution for managing and sched
 - **Back-End**: The back-end relies on Node.js and Express to provide robust server-side functionality.
 
 - **Database**: MongoDB is used as the database to store production and location data.
+
+## Getting Started
+
+### Demo Data (For Testing and Development)
+
+For testing and development purposes, you can generate fake data using the `generateFakeData()` function provided in the server. To enable this feature, make sure to uncomment the following line in your server code ( in `server.js` ):
+
+```javascript
+generateFakeData();
+```
