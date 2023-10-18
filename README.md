@@ -1,6 +1,6 @@
-# Broadcast_Production_Maneger
+# Sports Broadcasting Production Management Web App
 
-CRM for managing sports broadcast productions
+The Sports Broadcasting Production Management Web App is a web-based solution for managing and scheduling sports production events. This application simplifies the process of planning and organizing sports broadcasts, making it easier for teams to collaborate and coordinate their work
 
 # Production Management Web App
 
@@ -17,7 +17,7 @@ The Production Management Web App is a web-based solution for managing and sched
 
 ## Features
 
-- **Production Scheduling**: Schedule production events with ease, specifying dates, locations, and other relevant details.
+- **Production Scheduling**: Schedule sports production events with ease, specifying dates, locations, and other relevant details.
 
 - **Location Management**: Maintain a database of production locations, complete with address and weather information.
 
