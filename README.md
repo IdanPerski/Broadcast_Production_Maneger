@@ -11,9 +11,9 @@ The Production Management Web App is a web-based solution for managing and sched
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
-- [Usage](#usage)
+<!-- - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
+- [License](#license) -->
 
 ## Features
 
