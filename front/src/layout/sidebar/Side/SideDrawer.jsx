@@ -7,6 +7,7 @@ import { blue } from "@mui/material/colors";
 import PropTypes from "prop-types";
 import NavBarLink from "../../../routes/components/NavBarLink";
 import ROUTES from "../../../routes/routesModel";
+import { useUser } from "../../../users/providers/UserProvider";
 
 export default function SideDrawer({ drawerWidth, sideBarTitle }) {
   const menuArray = [
@@ -28,6 +29,9 @@ export default function SideDrawer({ drawerWidth, sideBarTitle }) {
     );
   };
 
+  const { user } = useUser();
+
+  console.log(user);
   return (
     <>
       <Drawer

@@ -55,16 +55,13 @@ const registerUser = async (normalizedUser) => {
 const loginUser = async ({ email, password }) => {
   if (DB === "MONGODB") {
     try {
-      console.log("!!!!");
       const user = await Person.findOne({ email });
       if (!user)
         throw new Error("Authentication Error: Invalid email or password");
       const validPassword = comparePassword(password, user.password);
-      console.log(validPassword);
       if (!validPassword)
         throw new Error("Authentication Error: Invalid email or password");
       const token = generateAuthToken(user);
-      console.log(token);
       return Promise.resolve(token);
     } catch (error) {
       return createError("Mongoose", error);
@@ -73,6 +70,24 @@ const loginUser = async ({ email, password }) => {
   return Promise.resolve("loginUser user not in mongodb");
 };
 
+const getUserById = async (userId) => {
+  if (DB === "MONGODB") {
+    try {
+      const user = await Person.findById(userId);
+      return Promise.resolve(user);
+    } catch (error) {
+      console.log(
+        terminalColors.danger(
+          "error at getUserById() at userAccsessDataService",
+        ),
+      );
+      return createError("Mongoose", error);
+    }
+  }
+  return Promise.resolve(" user not in the data base");
+};
+
 exports.registerUser = registerUser;
 exports.loginUser = loginUser;
 exports.getAllUSers = getAllUSers;
+exports.getUserById = getUserById;

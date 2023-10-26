@@ -32,7 +32,7 @@ export default function AddUSer() {
   ];
 
   const { user } = useUser();
-  // if (user) return <Navigate replace to={ROUTES.LOGIN_PAGE} />;
+  // if (!user) return <Navigate replace to={ROUTES.LOGIN_PAGE} />;
   return (
     <>
       <Container>

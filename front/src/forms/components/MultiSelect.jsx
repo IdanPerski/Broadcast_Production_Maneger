@@ -17,6 +17,7 @@ export default function MultiSelect({ name, options, onChange, data }) {
   const _name = formatNameToCamelCase(name);
   const currentData = data[_name];
   const [selectedValue, setSelectedValue] = useState([]);
+
   adjustOptionsToSelectValue(options);
 
   const checkingData = (value) => {
@@ -83,6 +84,8 @@ export default function MultiSelect({ name, options, onChange, data }) {
           }}
         >
           {options?.map((item) => {
+            console.log(data);
+
             return (
               <MenuItem
                 value={item._id || item}

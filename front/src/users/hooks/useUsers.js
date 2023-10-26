@@ -1,6 +1,12 @@
 import { useState, useCallback, useMemo } from "react";
 
-import { editUser, login, signup } from "../services/usersApiService";
+import {
+  editUser,
+  getSingleUserFromServer,
+  getUsersFromServer,
+  login,
+  signup,
+} from "../services/usersApiService";
 import {
   getUser,
   removeToken,
@@ -16,6 +22,8 @@ import {
   getAllUsers,
   getProductionElemnents,
 } from "../../poductions/services/productionsApiService";
+import EditUserPage from "../pages/EditUserPage";
+import setUserIdParamAndNavigate from "../helpers/setUserIdParamsAndNavigate";
 
 const useUsers = () => {
   const [isLoading, setLoading] = useState(true);
@@ -26,6 +34,7 @@ const useUsers = () => {
   useAxios();
 
   const [allUsers, setAllUsers] = useState([]);
+  const [member, setMember] = useState({});
 
   const requestStatus = useCallback(
     (loading, errorMessage, user = null) => {
@@ -42,7 +51,6 @@ const useUsers = () => {
       setTokenInLocalStorage(token);
       setToken(token);
       const userFromLocalStorage = getUser();
-      console.log(userFromLocalStorage);
       requestStatus(false, null, userFromLocalStorage);
       // navigate(ROUTES.CARDS);
     } catch (error) {
@@ -60,11 +68,11 @@ const useUsers = () => {
     async (userFromClient) => {
       try {
         const normalizedUser = normalizeUser(userFromClient);
-
-        console.log(normalizedUser);
-        await signup(normalizedUser);
+        const signedUser = await signup(normalizedUser);
         snack("success", "User has been successfully Registered");
         requestStatus(false, null, user);
+        // setTimeout(() => navigate(ROUTES.EDIT_USER), 2000);
+        navigate(`${ROUTES.EDIT_USER}/${signedUser._id}`);
       } catch (error) {
         console.log("register user Error:", error);
         requestStatus(false, error, null);
@@ -82,12 +90,32 @@ const useUsers = () => {
 
         snack("success", "User has been successfully updated");
         requestStatus(false, null, user);
-        setTimeout(() => navigate(ROUTES.MY_CARDS), 650);
+        // setTimeout(() => navigate(ROUTES.MY_CARDS), 650);
       } catch (error) {
         console.log(error);
       }
     },
     [requestStatus],
+  );
+
+  const handleGetMember = useCallback(
+    async (id) => {
+      if (id) {
+        try {
+          setLoading(true);
+          const member = await getSingleUserFromServer(id);
+          setMember(member);
+          setLoading(false);
+        } catch (error) {
+          console.log("error at handleGetMember() in useusers hook");
+          console.log(error);
+        }
+      } else {
+        return null;
+      }
+    },
+
+    [],
   );
   /*
  
@@ -143,8 +171,8 @@ UPDATE USER
   };
 
   const value = useMemo(
-    () => ({ isLoading, error, user, allUsers }),
-    [isLoading, error, user, allUsers],
+    () => ({ isLoading, error, user, allUsers, member }),
+    [isLoading, error, user, allUsers, member],
   );
 
   return {
@@ -154,6 +182,7 @@ UPDATE USER
     registerUser,
     handleUpdateUser,
     handleGetAllUsersRoles,
+    handleGetMember,
   };
 };
 

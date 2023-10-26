@@ -148,7 +148,7 @@ const useForm = (initialForm, schema, handleSubmit) => {
   const validateProperty = useCallback(
     ({ name, value }) => {
       const _name = formatNameToCamelCase(name);
-
+      console.log(_name, schema);
       if (_name === "date") handleDateInput(value);
 
       const obj = { [_name]: value };

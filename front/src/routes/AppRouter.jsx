@@ -7,6 +7,7 @@ import ErrorPage from "../pages/ErrorPage";
 import LoginPage from "../users/pages/LoginPage";
 import MembersList from "../users/pages/MembersList";
 import AddUser from "../users/pages/AddUser";
+import EditUserPage from "../users/pages/EditUserPage";
 
 export default function AppRouter() {
   return (
@@ -15,6 +16,7 @@ export default function AppRouter() {
       <Route path={ROUTES.ROOT} element={<HomePage />} />
       <Route path={ROUTES.LOGIN_PAGE} element={<LoginPage />} />
       <Route path={ROUTES.REGISTER} element={<AddUser />} />
+      <Route path={`${ROUTES.EDIT_USER}/:userId`} element={<EditUserPage />} />
 
       <Route path="*" element={<ErrorPage />} />
     </Routes>

@@ -32,6 +32,15 @@ export const getUsersFromServer = async (userId) => {
     return Promise.reject(error.message);
   }
 };
+export const getSingleUserFromServer = async (userId) => {
+  try {
+    const { data } = await axios.get(`${apiUrl}/editUser/${userId}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return Promise.reject(error.message);
+  }
+};
 
 export const editUser = async (user, normalizedUser) => {
   try {

@@ -16,7 +16,7 @@ const createMultipleFakeData = async (count, generateFunction, newData) => {
   }
   console.log(
     textColor.safe(
-      `createMultipleFakeData function successed- wass running ${count} times`,
+      `createMultipleFakeData function successed- was running ${count} times`,
     ),
   );
 };

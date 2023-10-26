@@ -27,6 +27,9 @@ app.listen(PORT, () => {
 
   connectToDb();
 
+  // Uncomment the following line to generate fake data for demo purposes
   // generateFakeData();
+
+  // Use the following line with caution as it will delete all data in the database
   // deleteAllDataBase();
 });
