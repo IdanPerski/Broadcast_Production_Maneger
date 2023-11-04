@@ -18,18 +18,22 @@ import camelCaseToRegular from "../../helpers/camelCaseToRegular";
 import CustomListItemText from "../../components/CustomListItemText";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 
-export default function DisplayUserDetails({ displayData }) {
+export default function DisplayUserDetails({ displayData, allData }) {
   const [updatedData, setUpdatedData] = useState({ ...displayData });
   const [editingField, setEditingField] = useState(null);
-
+  console.log(allData);
   const handleEditField = (key) => {
-    console.log("handleEditField");
+    console.log("handleEditField", key);
     if (editingField !== key) {
       setEditingField(key);
+      // handleSaveField(key);
     }
   };
   const handleFieldChange = (key, value) => {
+    console.log("handleFieldChange");
     setUpdatedData({ ...updatedData, [key]: value });
+
+    console.log(updatedData);
   };
   const handleSaveField = (key) => {
     console.log("handleSaveField");
@@ -84,7 +88,10 @@ export default function DisplayUserDetails({ displayData }) {
                                 handleFieldChange(key, e.target.value)
                               }
                             />
-                            <Button sx={{ margin: "auto" }}>
+                            <Button
+                              sx={{ margin: "auto" }}
+                              onClick={() => handleSaveField(key)}
+                            >
                               <SaveAltIcon />
                             </Button>
                           </Box>

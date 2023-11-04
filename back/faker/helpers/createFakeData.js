@@ -12,6 +12,7 @@ const createFakeData = async (
     await fakeData.save();
     console.log(textColor.lemon(SuccsesText), fakeData);
   } catch (error) {
+    console.log(textColor.danger("createFakeData ERROR!!!"));
     console.log(textColor.danger(catchText, error));
   }
 };

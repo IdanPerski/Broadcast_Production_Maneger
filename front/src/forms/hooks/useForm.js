@@ -24,82 +24,6 @@ const useForm = (initialForm, schema, handleSubmit) => {
     }
   }
 
-  // function updateRolesToData(target) {
-  //   const { name, value } = target;
-  //   if (!validateField(target, RoleSchema)) {
-  //     setRolesState((prev) => {
-  //       const updatedState = { ...prev, [name]: value };
-
-  //       console.log(data);
-  //       // Check if the role already exists in data.role
-  //       const existingRoleIndex = data.roles.findIndex((role) => {
-  //         return role.role !== name;
-  //       });
-
-  //       if (existingRoleIndex !== -1) {
-  //         console.log(data.roles);
-  //         console.log("existingRoleIndex!!!!!!!!!!");
-  //         // If the role exists, update its rate
-  //         const updatedRoles = [...data.roles];
-  //         updatedRoles[existingRoleIndex] = {
-  //           ...updatedRoles[existingRoleIndex],
-  //           rate: value,
-  //         };
-
-  //         setData((prevData) => ({
-  //           ...prevData,
-  //           roles: updatedRoles,
-  //         }));
-  //       } else {
-  //         console.log("ELSE-the role doesnt exist");
-  //         // If the role doesn't exist, add a new role object
-  //         setData((prevData) => ({
-  //           ...prevData,
-  //           roles: [...prevData.roles, updatedState],
-  //         }));
-  //       }
-  //       return updatedState;
-  //     });
-  //   }
-  // }
-  // function updateRolesToData(target) {
-  //   const { name, value } = target;
-  //   if (!validateField(target, RoleSchema)) {
-  //     setRolesState((prevRoleState) => {
-  //       const updatedRoleState = { ...prevRoleState, [name]: value };
-  //       setData((prevData) => {
-  //         const currentDataRoles = prevData.roles;
-  //         console.log(currentDataRoles);
-
-  //         currentDataRoles.map((role) => {
-  //           console.log(role.role, "role.role");
-  //           console.log(name, "name");
-  //         });
-
-  //         // Check if the role already exists prevData.roles
-  //         const existingRoleIndex = currentDataRoles.findIndex(
-  //           (role) => role.role === name,
-  //         );
-  //         console.log(existingRoleIndex);
-  //         if (existingRoleIndex !== -1) {
-  //           const currentRoles = prevData.roles;
-  //           const exsistingRole = currentRoles[existingRoleIndex];
-  //           console.log("exsistingRole:", exsistingRole);
-  //           // If the role exists, update its rate
-  //           currentRoles[existingRoleIndex] = { ...exsistingRole, rate: value };
-  //           return currentRoles[existingRoleIndex];
-  //         } else {
-  //           return {
-  //             ...prevData,
-  //             roles: [...prevData.roles, updatedRoleState],
-  //           };
-  //         }
-  //       });
-  //       return updatedRoleState;
-  //     });
-  //   }
-  // }
-
   const validateField = ({ name, value }, joiObject) => {
     if (joiObject[name]) {
       const validationObject = { [name]: value };
@@ -152,7 +76,7 @@ const useForm = (initialForm, schema, handleSubmit) => {
       if (_name === "date") handleDateInput(value);
 
       const obj = { [_name]: value };
-
+      console.log(obj);
       const generateSchema = Joi.object({
         [_name]: schema[_name],
       });
@@ -165,75 +89,9 @@ const useForm = (initialForm, schema, handleSubmit) => {
     [schema, handleDateInput],
   );
 
-  // const handleChange = useCallback(
-  //   ({ target }) => {
-  //     const { name, value } = target;
-
-  //     let _value;
-  //     if (Array.isArray(value)) _value = value[0];
-  //     const _name = formatNameToCamelCase(name);
-
-  //     const errorMessage = validateProperty(target);
-  //     console.log("!!!!!!!!!!!!!!!!!!!!");
-  //     if (errorMessage) {
-  //       console.log("errorMessage is truth");
-  //       console.log(target);
-  //       return setErrors((prev) => ({ ...prev, [_name]: errorMessage }));
-  //     } else
-  //       setErrors((prev) => {
-  //         let obj = { ...prev };
-  //         delete obj[name];
-  //         return obj;
-  //       });
-  //     console.log("????????");
-  //     const singelValue = [
-  //       "type",
-  //       "location",
-  //       "cg",
-  //       "editor",
-  //       "audioEngineer",
-  //       "visionMixerOperator",
-  //       "director",
-  //     ];
-
-  //     if (singelValue.includes(_name)) {
-  //       setData((prevData) => ({
-  //         ...prevData,
-  //         [_name]: value,
-  //       }));
-  //     } else {
-  //       const currentDataKeyValue = data[_name];
-  //       if (Array.isArray(currentDataKeyValue)) {
-  //         const isIdInArray = currentDataKeyValue.some(
-  //           (obj) => obj._id === _value._id,
-  //         );
-  //         const updatedArray = isIdInArray
-  //           ? currentDataKeyValue.filter((obj) => obj._id !== _value._id)
-  //           : [...currentDataKeyValue, _value];
-
-  //         setData((prevData) => ({
-  //           ...prevData,
-  //           [_name]: updatedArray,
-  //         }));
-  //       } else {
-  //         const filteredArray = currentDataKeyValue.filter((person) => {
-  //           return person !== _value;
-  //         });
-  //         setData((prevData) => ({
-  //           ...prevData,
-  //           [_name]: filteredArray,
-  //         }));
-  //       }
-  //     }
-  //   },
-
-  //   [validateProperty, data],
-  // );
-
-  /////////
-
   const handleChange = useCallback(
     ({ target }, singelValue = []) => {
+      console.log(target);
       const { name, value } = target;
       let _value = value;
       if (Array.isArray(value)) _value = value[0];

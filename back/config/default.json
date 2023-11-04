@@ -3,6 +3,7 @@
  "LOGGER": "morgan",
  "DB":"MONGODB",
  "VALIDATOR":"joi",
- "ENVIRONMENT": "development"
+ "ENVIRONMENT": {"development":false
 
+}
 }

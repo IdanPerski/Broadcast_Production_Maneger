@@ -1,31 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import {
-  Box,
-  Button,
-  Card,
-  Container,
-  List,
-  ListItem,
-  ListItemText,
-  TextField,
-} from "@mui/material";
+import { Box, Button, Card, Container, MenuPaper, Paper } from "@mui/material";
 import PageHeader from "../../components/PageHeader";
 import { useUser } from "../providers/UserProvider";
 import useUsers from "../hooks/useUsers";
 import DisplayUserDetails from "../components/DisplayUserDetails";
-import camelCaseToRegular from "../../helpers/camelCaseToRegular";
-import DisplayUserRolesAndRates from "../components/DisplayUserRolesAndRates";
 import MyTable from "../../components/table/MyTable";
-import { sanitizeData } from "../../components/table/helpers/sanitaizeData";
-import DynamicTableDataRow from "../../components/table/DynamicTableDataRow";
 import RoleRatesTableDataRow from "../../poductions/components/RoleRatesTableDataRow ";
-import MultiSelect from "../../forms/components/MultiSelect";
 import useForm from "../../forms/hooks/useForm";
 import DynamicSelectInput from "../../forms/components/DynamicSelectInput";
 import initialAddUserForm from "../helpers/initialForms/initialAddUserForm";
 import AddUserSchema from "../models/joi-schema/AddUserSchema";
+import UserPersonalDetails from "../components/UserPersonalDetails";
 
 export default function EditUserPage() {
   const { userId } = useParams();
@@ -79,13 +65,17 @@ export default function EditUserPage() {
           name={"Roles"}
           label={"roles"}
           data={member}
-          onChange={(target) => handleChange(target, RolesArray)}
+          onChange={(e) => {
+            console.log(e.target);
+
+            handleChange(e, RolesArray);
+          }}
         />
       ),
       rate: "0",
     };
 
-    console.log(member);
+    // console.log(member);
 
     return (
       <Container>
@@ -93,31 +83,34 @@ export default function EditUserPage() {
           title="User Details"
           subtitle={`${firstName} ${lastName}`}
         />
-        <Box sx={{ width: "75%", margin: "0 auto" }}>
-          <DisplayUserDetails displayData={name} />
-          <DisplayUserDetails displayData={contact.address} />
-          <DisplayUserDetails displayData={memberContact} />
-          <Typography variant="body1" color="initial" sx={{ m: 2 }}>
-            Roles:
-          </Typography>
-          <MyTable headRowArray={["Roles", "Rate", "Actions"]}>
-            {roles.map((role, i) => {
-              return <RoleRatesTableDataRow dataProp={role} key={i} />;
-            })}
-            {newRole ? (
-              <RoleRatesTableDataRow dataProp={newRoleRowData} />
-            ) : null}
-          </MyTable>
-          <Button sx={{ bgcolor: "black", m: 1 }} onClick={handleAddRole}>
-            add role
-          </Button>
 
-          <Button
-            sx={{ bgcolor: "black", m: 1 }}
-            onClick={() => console.log("submit")}
-          >
-            Submit
-          </Button>
+        <Box
+          sx={{
+            width: "100%",
+            margin: "0 auto",
+            display: "flex",
+          }}
+        >
+          <UserPersonalDetails
+            name={name}
+            contact={memberContact}
+            address={contact.address}
+            allDetails={member}
+          />
+
+          <Paper sx={{ ml: 1, height: "50%", width: "70%" }}>
+            <MyTable headRowArray={["Roles", "Rate", "Actions"]}>
+              {roles.map((role, i) => {
+                return <RoleRatesTableDataRow dataProp={role} key={i} />;
+              })}
+              {newRole ? (
+                <RoleRatesTableDataRow dataProp={newRoleRowData} />
+              ) : null}
+            </MyTable>
+            <Button sx={{ bgcolor: "black", m: 1 }} onClick={handleAddRole}>
+              add role
+            </Button>
+          </Paper>
         </Box>
       </Container>
     );
