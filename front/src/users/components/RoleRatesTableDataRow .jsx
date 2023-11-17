@@ -8,12 +8,14 @@ import {
 import React, { useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import DeleteProductionDialog from "./DeleteProductionDialog";
+import DeleteDialog from "../../poductions/components/DeleteDialog";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import camelCaseToRegular from "../../helpers/camelCaseToRegular";
 import { useParams } from "react-router-dom";
-import useUsers from "../../users/hooks/useUsers";
+import useUsers from "../hooks/useUsers";
+import { addRoleAndRate, setRate } from "../services/usersApiService";
+import formatNameToCamelCase from "../../forms/helpers/formatNameToCamelCase ";
 export default function RoleRatesTableDataRow({
   dataProp,
   actions = [],
@@ -23,22 +25,37 @@ export default function RoleRatesTableDataRow({
   const [isEditing, setEditing] = useState(false);
   const [updatedRate, setUpdatedRate] = useState(dataProp.rate);
   const { handleGetMember, value } = useUsers();
-
+  const [component, setNewComponent] = useState(dataProp.role);
+  // console.log(component);
   const { userId } = useParams();
 
-  const handleSave = () => {
-    console.log("handleSave");
-    if (dataProp.role.props && dataProp.role.props.name === "Roles") {
+  const handleSave = async () => {
+    const { member } = value;
+    console.log(component);
+    if (component.$$typeof && component.props.name === "Roles") {
+      const componentRole = dataProp.role.props.data.value;
       handleGetMember(userId);
-      const { member } = value;
+
+      const newRoleAndRate = {
+        role: formatNameToCamelCase(componentRole),
+        rate: updatedRate,
+        addRole: true,
+      };
+      console.log(newRoleAndRate);
+      await addRoleAndRate(userId, newRoleAndRate);
+      setEditing(false); // To exit edit mode
+      setNewComponent(componentRole);
+      return;
+    } else {
       console.log(value);
+      dataProp.rate = updatedRate;
+      console.log(dataProp);
+      await setRate(userId, dataProp);
+      setEditing(false); // To exit edit mode
     }
-    // Logic for saving changes
-    handleGetMember(userId);
-    console.log(value);
-    dataProp.rate = updatedRate;
-    setEditing(false); // To exit edit mode
   };
+
+  console.log(dataProp);
 
   const handleCancel = () => {
     // Logic for canceling edits
@@ -53,7 +70,7 @@ export default function RoleRatesTableDataRow({
         // Default edit action
         setEditing(true);
 
-        console.log(`Editing row with ID: ${dataProp._id}`);
+        console.log(`Editing row with ID: ${dataProp}`);
       },
     },
     {
@@ -81,7 +98,9 @@ export default function RoleRatesTableDataRow({
   useEffect(() => {
     // console.log(dataProp.value, dataProp, "!!!");
     console.log("useEffect at RoleRatesTableDataRow");
-  }, [handleSave, handleGetMember]);
+    // console.log(component.props, "component");
+    // console.log(dataProp.role);
+  }, [handleGetMember, dataProp, handleSave]);
 
   const allActions = [...defaultActions, ...actions];
 
@@ -94,20 +113,21 @@ export default function RoleRatesTableDataRow({
           sx={{ textAlign: "center", width: "40%" }}
         >
           {/* <Typography variant="body1" color="initial" textAlign={"center"}> */}
-          {camelCaseToRegular(dataProp.role) || dataProp.role}
+          {camelCaseToRegular(dataProp.role) || component}
           {/* </Typography> */}
         </TableCell>
 
         <TableCell align="center" sx={{ width: "20%" }}>
-          {isEditing ? (
+          {isEditing || component.$$typeof ? (
             <TextField
+              type="number"
               value={updatedRate}
               onChange={(e) => setUpdatedRate(e.target.value)}
               sx={{ textAlign: "20%" }}
             />
           ) : (
             <Typography variant="body1" color="initial" textAlign={"center"}>
-              {dataProp.rate}
+              {updatedRate === 0 ? dataProp.rate : updatedRate}
             </Typography>
           )}
         </TableCell>
@@ -116,7 +136,8 @@ export default function RoleRatesTableDataRow({
           {allActions.map((action, index) => {
             if (
               (action.label === "edit" && !isEditing) ||
-              (action.label !== "edit" && isEditing)
+              (action.label !== "edit" && isEditing) ||
+              component.$$typeof
             ) {
               return (
                 <Button
@@ -133,15 +154,18 @@ export default function RoleRatesTableDataRow({
         </TableCell>
       </TableRow>
 
-      <DeleteProductionDialog
+      <DeleteDialog
         isDialogOpen={isDialogOpen}
         onChangeDialog={() => {
           setDialog(false);
         }}
         onDelete={() => {
-          onDelete(dataProp._id);
+          console.log(` ${dataProp.role}`);
           setDialog(false);
         }}
+        title={`Delete  ${camelCaseToRegular(
+          dataProp.role,
+        )} role for this member`}
       />
     </>
   );

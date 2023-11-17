@@ -117,25 +117,12 @@ const useUsers = () => {
 
     [],
   );
+
   /*
  
 UPDATE USER
  
- const handleUpdateUser = useCallback(
-    async (userUpdate) => {
-      try {
-        const normalizedUser = normalizeUser(userUpdate);
-        await signup(normalizedUser);
-        await handleLogin({
-          email: userUpdate.email,
-          password: userUpdate.password,
-        });
-      } catch (error) {
-        requestStatus(false, error, null);
-      }
-    },
-    [requestStatus, handleLogin],
-  );
+
 
 
     //handleUpdateCard

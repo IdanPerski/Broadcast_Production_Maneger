@@ -5,6 +5,9 @@ const normalizeUser = require("../helpers/normalizeUser");
 const {
   registerUser,
   getUserById,
+  changeMemeberRate,
+  editMemberDetails,
+  addNewRoleAndRate,
 } = require("../services/usersAccessDataService");
 const auth = require("../../auth/authService");
 const terminalColors = require("../../chalk/terminalColors");
@@ -65,6 +68,22 @@ usersRouter.post("/register", async (req, res) => {
     console.log(error);
     return handleError(res, error.status || 500, error.message);
   }
+});
+
+usersRouter.patch("/editUser/:userId", async (req, res) => {
+  console.log(terminalColors.lemon("editing rate"));
+  const userId = req.params.userId;
+  if (req.body.addRole) {
+    console.log(terminalColors.warning("new role"));
+    delete req.body.addRole;
+    await addNewRoleAndRate(userId, req.body);
+    return res.send("new role added");
+  }
+  console.log(terminalColors.lemon("new rate only"));
+
+  const newUserRate = await changeMemeberRate(userId, req.body);
+
+  res.send("rate updated successfully");
 });
 
 module.exports = usersRouter;

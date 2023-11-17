@@ -51,3 +51,30 @@ export const editUser = async (user, normalizedUser) => {
     return Promise.reject(error.message);
   }
 };
+export const setRate = async (userId, roleAndRateObject) => {
+  try {
+    const { data } = await axios.patch(
+      `${apiUrl}/editUser/${userId}`,
+      roleAndRateObject,
+    );
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error, "ERROR SETRATE");
+    return Promise.reject(error.message);
+  }
+};
+export const addRoleAndRate = async (userId, roleAndRateObject) => {
+  try {
+    const { data } = await axios.patch(
+      `${apiUrl}/editUser/${userId}`,
+      roleAndRateObject,
+    );
+    console.log(data);
+    console.log("addRoleAndRate");
+    return data;
+  } catch (error) {
+    console.log(error, "ERROR SETRATE");
+    return Promise.reject(error.message);
+  }
+};

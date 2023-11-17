@@ -29,7 +29,6 @@ const registerUser = async (normalizedUser) => {
       const {
         contact: { email },
       } = normalizedUser;
-      console.log(email);
       let user = await Person.findOne({ email });
 
       if (user) {
@@ -38,12 +37,10 @@ const registerUser = async (normalizedUser) => {
         throw new Error("User already registered");
       }
       user = new Person(normalizedUser);
-      console.log(terminalColors.safe("!!!!!!!!!!!!"), user);
       user = await user.save();
       console.log(terminalColors.lemon(_.pick(user, ["roles"])));
       user = _.pick(user, ["name", "contact", "_id"]);
       return Promise.resolve(user);
-      d;
     } catch (error) {
       console.log(terminalColors.danger(error), "ERROR! ");
       return createError("Mongoose", error);
@@ -87,7 +84,49 @@ const getUserById = async (userId) => {
   return Promise.resolve(" user not in the data base");
 };
 
+const changeMemeberRate = async (userId, roleRateObj) => {
+  if (DB === "MONGODB") {
+    try {
+      const user = await Person.findById(userId);
+      const { roles } = user;
+      const updatedRateforRoles = roles.map((obj) => {
+        if (obj.role === roleRateObj.role) {
+          // If the role matches, update the rate
+          return { ...obj, rate: roleRateObj.rate };
+        }
+
+        return obj;
+      });
+      user.roles = updatedRateforRoles;
+
+      await user.save();
+      console.log(terminalColors.safe("rate updated successfuly"));
+      return user;
+    } catch (error) {
+      console.log(terminalColors.warning("changeMemeberRate error"));
+      console.log(error);
+    }
+  }
+};
+const addNewRoleAndRate = async (userId, roleRateObj) => {
+  if (DB === "MONGODB") {
+    try {
+      const user = await Person.findById(userId);
+      const { roles } = user;
+      const updatedRateforRoles = [...roles, roleRateObj];
+      user.roles = updatedRateforRoles;
+      await user.save();
+      return user;
+    } catch (error) {
+      console.log(terminalColors.warning("addNewRoleAndRate error"));
+      console.log(error);
+    }
+  }
+};
+
 exports.registerUser = registerUser;
 exports.loginUser = loginUser;
 exports.getAllUSers = getAllUSers;
 exports.getUserById = getUserById;
+exports.changeMemeberRate = changeMemeberRate;
+exports.addNewRoleAndRate = addNewRoleAndRate;

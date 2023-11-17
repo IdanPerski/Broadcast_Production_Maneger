@@ -1,27 +1,15 @@
-import {
-  Box,
-  Card,
-  CardHeader,
-  ListItemText,
-  Avatar,
-  List,
-  TextField,
-  Button,
-  ListItem,
-  Container,
-  Typography,
-} from "@mui/material";
+import { Box, Card, List, TextField, Button } from "@mui/material";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { login } from "../services/usersApiService";
+
 import camelCaseToRegular from "../../helpers/camelCaseToRegular";
 import CustomListItemText from "../../components/CustomListItemText";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 
-export default function DisplayUserDetails({ displayData, allData }) {
+export default function DisplayUserDetails({ displayData }) {
   const [updatedData, setUpdatedData] = useState({ ...displayData });
   const [editingField, setEditingField] = useState(null);
-  console.log(allData);
+
   const handleEditField = (key) => {
     console.log("handleEditField", key);
     if (editingField !== key) {
@@ -32,8 +20,6 @@ export default function DisplayUserDetails({ displayData, allData }) {
   const handleFieldChange = (key, value) => {
     console.log("handleFieldChange");
     setUpdatedData({ ...updatedData, [key]: value });
-
-    console.log(updatedData);
   };
   const handleSaveField = (key) => {
     console.log("handleSaveField");
@@ -41,7 +27,6 @@ export default function DisplayUserDetails({ displayData, allData }) {
     // You can save the updatedData to your backend or state here'
     displayData[key] = updatedData;
 
-    console.log(updatedData);
     console.log(key);
   };
 

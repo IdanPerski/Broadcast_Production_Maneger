@@ -13,7 +13,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import useProductions from "../hooks/useProductions";
 import ProductionCollapsibleContent from "./ProductionCollapsibleContent";
-import DeleteProductionDialog from "./DeleteProductionDialog";
+import DeleteDialog from "./DeleteDialog";
 export default function ProductionTableDataRow({
   dataProp,
   actions = [],
@@ -116,7 +116,7 @@ export default function ProductionTableDataRow({
         </TableCell>
       </TableRow>
 
-      <DeleteProductionDialog
+      <DeleteDialog
         isDialogOpen={isDialogOpen}
         onChangeDialog={() => {
           setDialog(false);
@@ -125,6 +125,10 @@ export default function ProductionTableDataRow({
           onDelete(dataProp._id);
           setDialog(false);
         }}
+        dialogText={
+          "This action will permanently remove the production and its data from the database. You won't be able to recover it later"
+        }
+        title={"Are you sure you want to delete this production ?"}
       />
     </>
   );
