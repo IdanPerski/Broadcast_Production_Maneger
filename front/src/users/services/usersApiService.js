@@ -4,7 +4,9 @@ const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8181";
 
 export const login = async (user) => {
   try {
-    const { data } = await axios.post(`${apiUrl}/users/login`, user);
+    console.log(user);
+    const { data } = await axios.post(`${apiUrl}/login`, user);
+    console.log(data, "headers");
     return data;
   } catch (error) {
     console.log(error);
