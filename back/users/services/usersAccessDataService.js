@@ -52,12 +52,19 @@ const registerUser = async (normalizedUser) => {
 const loginUser = async ({ email, password }) => {
   if (DB === "MONGODB") {
     try {
-      const user = await Person.findOne({ email });
-      if (!user)
+      const user = await Person.findOne({ "contact.email": email });
+      console.log(user);
+      if (!user) {
+        //TODO: send client error message and handle Error
         throw new Error("Authentication Error: Invalid email or password");
+      }
+      console.log(password, user.password, "KKKKKKKKKKKKKKKK");
       const validPassword = comparePassword(password, user.password);
-      if (!validPassword)
-        throw new Error("Authentication Error: Invalid email or password");
+
+      if (!validPassword) {
+        //TODO: send client error message and handle Error
+        throw new Error("Authentication Error: Invalid password");
+      }
       const token = generateAuthToken(user);
       return Promise.resolve(token);
     } catch (error) {

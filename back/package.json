@@ -19,6 +19,7 @@
   "dependencies": {
     "@faker-js/faker": "^8.0.2",
     "axios": "^1.4.0",
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "chalk": "^4.1.1",
     "config": "^3.3.9",

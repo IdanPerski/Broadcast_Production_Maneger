@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { func, object, string } from "prop-types";
 import Grid from "@mui/material/Grid";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
 import ROUTES from "../../routes/routesModel";
 import MultiSelect from "../../forms/components/MultiSelect";
-import { Button, Typography } from "@mui/material";
+import { FormControlLabel, Typography } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
 
 const RegisterForm = ({
   onSubmit,
@@ -29,7 +30,7 @@ const RegisterForm = ({
     "Talent",
   ];
 
-  const [roleRatesInput, setRoleRatesInput] = useState([]);
+  // const [roleRatesInput, setRoleRatesInput] = useState([]);
 
   // const handleAddRoleRate = () => {
   //   // Create a unique key for each RoleRate component
@@ -149,17 +150,35 @@ const RegisterForm = ({
         <Typography sx={{ m: 1, fontSize: "1.3em", width: "100%" }}>
           Roles:
         </Typography>
-
-        {/* <Button sx={{ width: "100%" }} onClick={handleAddRoleRate}>
-          Add Role
-        </Button> */}
+        <FormControlLabel
+          onChange={(e) => {
+            setData({ ...data, isAdmin: !!e.target.checked });
+          }}
+          name="isAdmin"
+          control={<Checkbox value={data.isAdmin} color="primary" />}
+          label="Signup as Admin"
+          sm={12}
+        />
 
         <MultiSelect
           name={"roles"}
           options={RolesArray}
           data={data}
           onChange={onInputChange}
+          sm={12}
         />
+
+        {data.isAdmin ? (
+          <Input
+            name="password"
+            label="password"
+            type="password"
+            error={errors.password}
+            onChange={onInputChange}
+            data={data}
+            sm={8}
+          />
+        ) : null}
       </Grid>
     </Form>
   );

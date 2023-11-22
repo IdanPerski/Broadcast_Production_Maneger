@@ -14,6 +14,7 @@ import useProductions from "../poductions/hooks/useProductions";
 import ProductionTableDataRow from "../poductions/components/ProductionTableDataRow";
 import TableHeadRow from "../poductions/components/TableHeadRow";
 import sortByDate from "../helpers/sortArray";
+import { useUser } from "../users/providers/UserProvider";
 
 export default function HomePage() {
   const { handleGetProductionsForMainTable, value, handleDeleteProduction } =
@@ -44,7 +45,8 @@ export default function HomePage() {
     }
   }, [productions]);
 
-  // const { user } = useUser();
+  const { user } = useUser();
+  console.log(user);
 
   // if (!user) return <Navigate replace to={ROUTES.LOGIN_PAGE} />;
   return (

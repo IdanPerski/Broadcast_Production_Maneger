@@ -19,9 +19,20 @@ const AddUserSchema = {
   street: Joi.string().min(2).max(256).required(),
   streetNumber: Joi.number().required(),
   // role: Joi.string(),
-  password: Joi.string().min(0).allow(), //TODO-set password ruleset
+  password: Joi.string().when("isAdmin", {
+    is: true,
+    then: Joi.string()
+      .regex(
+        /((?=.*\d{1})(?=.*[A-Z]{1})(?=.*[a-z]{1})(?=.*[!@#$%^&*-]{1}).{7,20})/,
+      )
+      .message(
+        "The password must be at least seven characters long and contain an uppercase letter, a lowercase letter, a number, and one of the following characters !@#$%^&*-",
+      )
+      .required(),
+    otherwise: Joi.string().allow("").optional(),
+  }),
   roles: Joi.array().items(RoleSchema),
-  authorization: Joi.string().required(),
+  isAdmin: Joi.boolean(),
 };
 
 export default AddUserSchema;

@@ -8,8 +8,8 @@ const initialAddUserForm = {
   phone: "",
   email: "",
   roles: [],
-  authorization: "user",
   password: "",
+  isAdmin: false,
 };
 
 export default initialAddUserForm;

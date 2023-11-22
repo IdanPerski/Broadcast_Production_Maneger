@@ -52,7 +52,7 @@ const useUsers = () => {
       setToken(token);
       const userFromLocalStorage = getUser();
       requestStatus(false, null, userFromLocalStorage);
-      // navigate(ROUTES.CARDS);
+      // navigate(ROUTES.ROOT);
     } catch (error) {
       console.log("catched error at handleLogin");
       requestStatus(false, error, null);
