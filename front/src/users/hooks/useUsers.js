@@ -48,10 +48,13 @@ const useUsers = () => {
   const handleLogin = useCallback(async (user) => {
     try {
       const token = await login(user);
+      console.log(token, "login token");
       setTokenInLocalStorage(token);
-      setToken(token);
+      // setToken(token);
       const userFromLocalStorage = getUser();
+      console.log(userFromLocalStorage);
       requestStatus(false, null, userFromLocalStorage);
+
       // navigate(ROUTES.ROOT);
     } catch (error) {
       console.log("catched error at handleLogin");
@@ -117,32 +120,6 @@ const useUsers = () => {
 
     [],
   );
-
-  /*
- 
-UPDATE USER
- 
-
-
-
-    //handleUpdateCard
-  const handleUpdateUser = async (userId) => {
-    try {
-      setLoading(true);
-      const card = await editCard(cardId);
-      requestStatus(false, null, null, card);
-      snack("success", "The business card has been successfully updated");
-    } catch (error) {
-      requestStatus(false, error, null);
-    }
-  };
-
-  
-  const handleUpdateUser = async (cardId, cardFromClient) =>{
-
-  }
-  
-  */
 
   const handleGetAllUsersRoles = async () => {
     console.log("handleGetAllUsersRoles ON");

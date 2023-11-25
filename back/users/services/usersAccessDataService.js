@@ -58,7 +58,6 @@ const loginUser = async ({ email, password }) => {
         //TODO: send client error message and handle Error
         throw new Error("Authentication Error: Invalid email or password");
       }
-      console.log(password, user.password, "KKKKKKKKKKKKKKKK");
       const validPassword = comparePassword(password, user.password);
 
       if (!validPassword) {
