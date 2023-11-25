@@ -2,6 +2,7 @@ const terminalColors = require("../../chalk/terminalColors");
 const _ = require("lodash");
 
 const normalizeUser = async (user) => {
+  console.log(terminalColors.warning("normalizeUser:"), user);
   let { roles } = user;
   const name = { ...user.name };
   const contact = { ...user.contact };

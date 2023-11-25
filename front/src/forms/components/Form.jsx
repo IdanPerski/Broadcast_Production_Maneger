@@ -21,7 +21,6 @@ const Form = ({
   styles,
   children,
 }) => {
-  console.log(onChange());
   const navigate = useNavigate();
   // const { isDark } = useTheme();
   const titleStyle = { color: "#333333 " };

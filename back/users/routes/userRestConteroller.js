@@ -70,7 +70,9 @@ usersRouter.get("/editUser/:userId", async (req, res) => {
 usersRouter.post("/register", async (req, res) => {
   try {
     let user = req.body;
+    console.log(terminalColors.lemon("req.body"), user);
     user = await normalizeUser(user);
+    console.log(terminalColors.lemon("isAdmin:"), user);
     if (user.password != "") {
       user.password = generateUserPassword(user.password);
     }

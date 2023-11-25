@@ -12,15 +12,20 @@ const UserContext = createContext();
 
 export default function UserProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(getToken());
 
+  const [token, setToken] = useState(getToken());
+  console.log(user);
+
+  console.log(token, "token at userProvider");
   useEffect(() => {
     if (!user) {
+      console.log("USER IS NULL!!!!!!!");
       const userFromLocalStorage = getUser();
-
+      console.log(userFromLocalStorage);
       setUser(userFromLocalStorage);
     }
   }, [user, setUser]);
+
   const value = useMemo(
     () => ({ user, setUser, token, setToken }),
     [user, token],
@@ -31,6 +36,7 @@ export default function UserProvider({ children }) {
 
 export const useUser = () => {
   const context = useContext(UserContext);
+  console.log(context);
   if (!context) throw new Error("useUser must be used within a NameProvider");
   return context;
 };

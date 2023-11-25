@@ -10,7 +10,7 @@ const uri = `mongodb+srv://${userName}:${password}@cluster0.grm64ax.mongodb.net/
 
 const connectToAtlas = async () => {
   try {
-    console.log(textColor.lemon("ATLAS"));
+    console.log(textColor.lemon("trying to connect ATLAS"));
     await await mongoose.connect(uri);
     console.log(textColor.safe("connected to Atlas mongoDB"));
   } catch (error) {

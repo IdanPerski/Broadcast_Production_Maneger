@@ -72,17 +72,15 @@ const useForm = (initialForm, schema, handleSubmit) => {
   const validateProperty = useCallback(
     ({ name, value }) => {
       const _name = formatNameToCamelCase(name);
-      console.log(_name, schema);
       if (_name === "date") handleDateInput(value);
 
       const obj = { [_name]: value };
-      console.log(obj);
+
       const generateSchema = Joi.object({
         [_name]: schema[_name],
       });
 
       const { error } = generateSchema.validate(obj);
-      console.log(error);
       // error == undefined ? console.log("no error") : console.log(error, "!!");
       return error ? error.details[0].message : null;
     },
@@ -91,7 +89,6 @@ const useForm = (initialForm, schema, handleSubmit) => {
 
   const handleChange = useCallback(
     ({ target }, singelValue = []) => {
-      console.log(target);
       const { name, value } = target;
       let _value = value;
       if (Array.isArray(value)) _value = value[0];
@@ -115,7 +112,6 @@ const useForm = (initialForm, schema, handleSubmit) => {
         }));
       } else {
         const currentDataKeyValue = data[_name];
-        console.log(currentDataKeyValue);
         if (Array.isArray(currentDataKeyValue)) {
           const isIdInArray = currentDataKeyValue.some((obj) => {
             if (obj._id) return obj._id === _value._id;
@@ -192,15 +188,12 @@ const useForm = (initialForm, schema, handleSubmit) => {
 
   const validateForm = useCallback(() => {
     const schemaForValidate = Joi.object(schema);
-
     const { error } = schemaForValidate.validate(data);
-    console.log(error);
     if (error) return error;
     return null;
   }, [schema, data]);
 
   const onSubmit = useCallback(() => {
-    console.log("SUBMIT!");
     handleSubmit(data);
   }, [handleSubmit, data]);
 

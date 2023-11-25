@@ -10,7 +10,7 @@ import loginSchema from "../models/joi-schema/loginSchema";
 import useUsers from "../hooks/useUsers";
 import PageHeader from "../../components/PageHeader";
 export default function LoginPage() {
-  const { user } = useUser();
+  const { user, token } = useUser();
   const { handleLogin } = useUsers();
 
   const { value, ...rest } = useForm(
@@ -18,6 +18,8 @@ export default function LoginPage() {
     loginSchema,
     handleLogin,
   );
+
+  console.log(token);
 
   if (user) return <Navigate replace to={ROUTES.ROOT} />;
   return (

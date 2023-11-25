@@ -3,6 +3,7 @@ require("dotenv").config();
 const key = process.env.SECRET_KEY;
 
 const generateAuthToken = (user) => {
+  console.log("generateAuthToken");
   const {
     _id,
     isAdmin,
@@ -11,6 +12,7 @@ const generateAuthToken = (user) => {
 
   const payloadData = { _id, isAdmin, first, id: _id };
   const token = jwt.sign(payloadData, key);
+
   return token;
 };
 

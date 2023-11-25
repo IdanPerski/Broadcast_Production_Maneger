@@ -3,8 +3,7 @@ import formatNameToCamelCase from "../../../forms/helpers/formatNameToCamelCase 
 const normalizeUser = (user) => {
   let { roles } = user;
   roles.map((obj) => {
-    console.log(obj.role);
-    if (obj.role != "CG") {
+    if (obj.role != "CG" || obj.role != "VTR") {
       console.log(obj.role);
       obj.role = formatNameToCamelCase(obj.role);
     }
@@ -32,7 +31,7 @@ const normalizeUser = (user) => {
     // },
     roles: user.roles,
     password: user.password,
-    // isAdmin: user.isAdmin,
+    isAdmin: user.isAdmin,
   };
 };
 

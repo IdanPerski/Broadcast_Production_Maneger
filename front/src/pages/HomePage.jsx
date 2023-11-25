@@ -15,6 +15,8 @@ import ProductionTableDataRow from "../poductions/components/ProductionTableData
 import TableHeadRow from "../poductions/components/TableHeadRow";
 import sortByDate from "../helpers/sortArray";
 import { useUser } from "../users/providers/UserProvider";
+import { Navigate } from "react-router-dom";
+import ROUTES from "../routes/routesModel";
 
 export default function HomePage() {
   const { handleGetProductionsForMainTable, value, handleDeleteProduction } =
@@ -48,7 +50,7 @@ export default function HomePage() {
   const { user } = useUser();
   console.log(user);
 
-  // if (!user) return <Navigate replace to={ROUTES.LOGIN_PAGE} />;
+  if (!user) return <Navigate replace to={ROUTES.LOGIN_PAGE} />;
   return (
     <Container>
       <PageHeader title="Next Productions" subtitle="" />

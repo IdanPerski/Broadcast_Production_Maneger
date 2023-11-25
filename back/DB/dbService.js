@@ -4,7 +4,6 @@ const config = require("config");
 const connectToAtlas = require("./mongodb/connectToAtlas");
 
 const { development } = config.ENVIRONMENT;
-console.log(development);
 const ENVIRONMENT = config.get("ENVIRONMENT");
 console.log(textColor.lemon(`development enviroment is  ${development}  `));
 const connectToDb = () => {
